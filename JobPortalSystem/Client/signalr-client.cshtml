@@ -1,0 +1,37 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>SignalR Client Test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.10/signalr.min.js"></script>
+</head>
+<body>
+    <h2>SignalR Client Test</h2>
+    <button onclick="connectToSignalR()">Connect to SignalR</button>
+    <p id="status">Status: Disconnected</p>
+    <ul id="messages"></ul>
+
+    <script>
+        let connection;
+
+        function connectToSignalR() {
+            connection = new signalR.HubConnectionBuilder()
+                .withUrl("https://localhost:7245/notificationhub") // Replace with your actual SignalR hub URL
+                .build();
+
+            connection.on("ReceiveApplicationStatusUpdate", (message) => {
+                const messagesList = document.getElementById("messages");
+                const li = document.createElement("li");
+                li.textContent = message;
+                messagesList.appendChild(li);
+            });
+
+            connection.start()
+                .then(() => {
+                    document.getElementById("status").textContent = "Status: Connected";
+                    console.log("Connected to SignalR hub.");
+                })
+                .catch(err => console.error(err));
+        }
+    </script>
+</body>
+</html>

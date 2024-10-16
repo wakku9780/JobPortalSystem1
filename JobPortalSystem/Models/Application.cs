@@ -6,15 +6,18 @@ namespace JobPortalSystem.Models
     {
         public int ApplicationId { get; set; }
         public DateTime AppliedDate { get; set; }
-        public string Status { get; set; }
+        // public string Status { get; set; }
+
+        // Enum ko use karte hain
+        public ApplicationStatus Status { get; set; }
 
         // Many-to-One with User
-        [JsonIgnore]
+        //[JsonIgnore]
         public int UserId { get; set; }
         public User? User { get; set; }
 
         // Many-to-One with Job
-        [JsonIgnore]
+        //[JsonIgnore]
         public int JobId { get; set; }
         public Job? Job { get; set; }
     }

@@ -65,7 +65,7 @@ namespace JobPortalSystem.Controllers
                 UserId = user.UserId, // Link to the new user
                 JobId = job.JobId,    // Link to the existing job
                 AppliedDate = DateTime.Now,
-                Status = "Pending"
+                Status = ApplicationStatus.Applied // Use the enum instead of string
             };
 
             // Add the application and save it to the database
@@ -75,6 +75,7 @@ namespace JobPortalSystem.Controllers
             // Return the newly created user
             return CreatedAtAction(nameof(GetUser), new { id = user.UserId }, user);
         }
+
 
 
 
