@@ -16,6 +16,9 @@ namespace JobPortalSystem.Data
         public DbSet<Job> Jobs { get; set; }
         public DbSet<Application> Applications { get; set; }
 
+        public DbSet<UserProfile> UserProfiles { get; set; }
+
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -30,6 +33,17 @@ namespace JobPortalSystem.Data
                 .WithMany(j => j.Applications)
                 .HasForeignKey(a => a.JobId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+
+
+
+            // Configure One-to-One relationship
+            modelBuilder.Entity<User>()
+          .HasOne(u => u.UserProfile)
+          .WithOne(up => up.User)
+          .HasForeignKey<UserProfile>(up => up.UserId);
+
+            modelBuilder.Entity<UserProfile>().ToTable("UserProfiles");
         }
 
 

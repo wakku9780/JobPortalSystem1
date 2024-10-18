@@ -18,6 +18,11 @@ namespace JobPortalSystem.Models
         [JsonIgnore]
         // One-to-Many relationship with Applications
         public ICollection<Application> Applications { get; set; } = new List<Application>();
+
+
+
+        // New - One-to-One relationship with UserProfile
+        public UserProfile? UserProfile { get; set; }
     }
 
 }

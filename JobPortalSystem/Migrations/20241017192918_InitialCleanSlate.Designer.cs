@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobPortalSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241016110444_UpdateApplicationStatusToEnum")]
-    partial class UpdateApplicationStatusToEnum
+    [Migration("20241017192918_InitialCleanSlate")]
+    partial class InitialCleanSlate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -193,6 +193,41 @@ namespace JobPortalSystem.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("JobPortalSystem.Models.UserProfile", b =>
+                {
+                    b.Property<int>("UserProfileId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserProfileId"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Bio")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContactNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ProfilePictureUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserProfileId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("UserProfiles", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -423,6 +458,17 @@ namespace JobPortalSystem.Migrations
                     b.Navigation("Employer");
                 });
 
+            modelBuilder.Entity("JobPortalSystem.Models.UserProfile", b =>
+                {
+                    b.HasOne("JobPortalSystem.Models.User", "User")
+                        .WithOne("UserProfile")
+                        .HasForeignKey("JobPortalSystem.Models.UserProfile", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -487,6 +533,9 @@ namespace JobPortalSystem.Migrations
             modelBuilder.Entity("JobPortalSystem.Models.User", b =>
                 {
                     b.Navigation("Applications");
+
+                    b.Navigation("UserProfile")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

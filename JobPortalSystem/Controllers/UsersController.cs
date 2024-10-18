@@ -1,4 +1,5 @@
 ﻿using JobPortalSystem.Data;
+using JobPortalSystem.DTOs;
 using JobPortalSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -78,6 +79,7 @@ namespace JobPortalSystem.Controllers
 
 
 
+         
 
 
 
